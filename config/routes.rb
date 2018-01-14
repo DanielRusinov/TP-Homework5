@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  resources :keys
-  resources :messages
+  resources :keys, only:[:show, :new]
+  resources :messages, only:[:show, :encrypt, :decrypt]
   
   post '/rsas', to: 'keys#new'
   get '/rsas/:id', to: 'keys#show'

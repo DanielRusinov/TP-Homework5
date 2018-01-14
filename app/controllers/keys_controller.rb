@@ -1,19 +1,11 @@
 require 'prime'
-require "messages_controller.rb"
 
 class KeysController < ApplicationController
-
-  before_action :set_key, only: [:show, :edit, :update, :destroy]
-
-
-  def index
-    @keys = Key.all
-  end
-
+  #before_action :set_key, only: [:show, :edit, :update, :destroy]
 
   def show
-	key = Key.find_by id: params[:id]
-	render json: {'n' => key.n , 'e' => key.e, 'd' => key.d}
+	key = Key.find_by_id( params[:id] )
+	render json: {:n => key.n , :e => key.e, :d => key.d}
   end
 
 
@@ -90,26 +82,6 @@ class RSA
 
    end
 end
-
-
-  def edit
-  end
-
-
-  def create
-    @key = Key.new(key_params)
-
-    respond_to do |format|
-      if @key.save
-        format.html { redirect_to @key, notice: 'Key was successfully created.' }
-        format.json { render :show, status: :created, location: @key }
-      else
-        format.html { render :new }
-        format.json { render json: @key.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
 
   private
     # Use callbacks to share common setup or constraints between actions.

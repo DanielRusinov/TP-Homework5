@@ -1,7 +1,6 @@
-require "keys_controller.rb"
 class MessagesController < ApplicationController
   
-  before_action :set_message, only: [:show, :edit, :update, :destroy]
+  #before_action :set_message, only: [:show, :edit, :update, :destroy]
 
 	def show
 		message = Message.find_by id: params[:messageid]
@@ -9,7 +8,7 @@ class MessagesController < ApplicationController
 	end
 
 	def encrypt
-		rsa = Key.find_by id: params[:id]
+		rsa = Key.find_by_id(params[:id])
 		rsa_ = RSA.new(rsa.n, rsa.e, rsa.d)
 		encrypted_message = rsa_.encrypt(params[:message])
 		message = Message.new({content: encrypted_message})
@@ -21,7 +20,7 @@ class MessagesController < ApplicationController
 	end
 
 	def decrypt
-		rsa = Key.find_by id: params[:id]
+		rsa = Key.find_by_id(params[:id])
 		rsa_ = RSA.new(rsa.n, rsa.e, rsa.d)
 		decrypted_message = rsa_.decrypt(params[:message])
     
